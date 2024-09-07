@@ -1,4 +1,4 @@
-const { createLogger, format, transports } = require('winston');  // createLogger is function and other two are object  
+const { createLogger, format, transports } = require('winston');
 const { combine, timestamp, label, printf } = format;
 
 const customFormat = printf(( { level, message, timestamp, error } ) => {
@@ -10,7 +10,7 @@ const logger = createLogger({
         timestamp({format: 'YYYY-MM-DD HH:mm:ss'}),
         customFormat,
     ),
-    transports: [   // most important part of this file 
+    transports: [
         new transports.Console(),
         new transports.File({filename: 'combined.log'})
     ],

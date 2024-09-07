@@ -1,7 +1,10 @@
-const dotenv = require('dotenv') ;
+// src/config/server-config.js
+const dotenv = require('dotenv');
 
-dotenv.config() ; // wil add all the enviroment variable to the process.env
+dotenv.config();
+
+console.log('Loaded PORT:', process.env.PORT); // Debugging line
 
 module.exports = {
-    PORT : process.env.PORT
-}
+    PORT: process.env.PORT
+};
