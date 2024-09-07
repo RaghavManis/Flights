@@ -7,13 +7,13 @@ class CrudRepository {
 
     // Create a new record
     async create(data) {
-        try {
+        // try {
             const response = await this.model.create(data);
             return response;
-        } catch (error) {
-            Logger.error("Something went wrong in the Crud : create", error);
-            throw error;
-        }
+        // } catch (error) {
+        //     Logger.error("Something went wrong in the Crud : create", error);
+        //     throw error;
+        // }
     }
 
     // Delete a record by ID 
