@@ -11,6 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.City,{  // SETTING UO THE DETAILS AT THE JS LEVEL 
+        foreignKey:'cityId',   // AIRPORT KEY WHICH IS POINTING TIO THE PRIMARY KEY OF CITY 
+        onDelete:'CASCADE' ,   // ADDING EXTRA FEATURES 
+        onUpdate:'CASCADE'
+      })
+
     }
   }
   Airport.init({
