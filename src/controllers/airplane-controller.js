@@ -1,6 +1,7 @@
 const {AirplaneService} = require('../services') ;
 const {StatusCodes} = require('http-status-codes') ;
 const {ErrorResponse , SuccessResponse} = require('../utills/common') ;
+const AppError = require('../utills/errors/app-error');
 
 /**
  * POST : /airplanes
@@ -61,7 +62,7 @@ async function getAirplanes(req,  res){
               .status(StatusCodes.OK)
               .json(SuccessResponse) ;
     
-  } catch (error) {
+  } catch (error) {// no need to handle error saperately , since error coming from airplaneService need already contains the details so use that
     ErrorResponse.error = error ;
     return res  
               .status(error.statusCodes)
@@ -82,7 +83,7 @@ async function getAirplane(req,  res){
               .status(StatusCodes.OK)
               .json(SuccessResponse) ;
     
-  } catch (error) {
+  } catch (error) {// no need to handle error saperately , since error coming from airplaneService need already contains the details so use that
     ErrorResponse.error = error ;
     return res  
               .status(error.statusCodes)
@@ -98,7 +99,7 @@ async function destroyAirplane(request , response){
     return response
                    .status(StatusCodes.OK)
                    .json(SuccessResponse) ;
-  } catch (error) {
+  } catch (error) {// no need to handle error saperately , since error coming from airplaneService need already contains the details so use that
     ErrorResponse.error=  error ;
     return response
                    .status(error.statusCodes)
@@ -106,9 +107,27 @@ async function destroyAirplane(request , response){
   }
 }
 
+async function updateAirplane(req , res){
+  try {
+    const airplane = await AirplaneService.updataAirplane(req.params.id , {
+      modelNumber:req.body.modelNumber,
+      capacity : req.body.capacity
+    })
+    SuccessResponse.data = airplane ;
+    return res
+              .status(StatusCodes.OK)
+              .json(SuccessResponse) ;
+  } catch (error) {// no need to handle error saperately, since error coming from airplaneService need already contains the details so use that
+    ErrorResponse.error = error ;
+    return res
+             .status(error.statusCodes)
+             .json(ErrorResponse) ;
+  }
+}
 module.exports = {
     createAirplane ,
     getAirplanes,
     getAirplane,
-    destroyAirplane
+    destroyAirplane,
+    updateAirplane
 }

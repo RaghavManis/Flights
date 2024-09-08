@@ -13,7 +13,9 @@ router.get('/' , AirplaneController.getAirplanes) ;
 router.get('/:id' , AirplaneController.getAirplane) ;
 
 // /api/v1/airplanes:id delete request
-console.log("destroy airplane") ;
 router.delete('/:id' , AirplaneController.destroyAirplane) ;
+
+// /api/v1/airplanes/:id PATCH request
+router.put('/:id' , AirplaneController.updateAirplane) ;
 
 module.exports = router ;

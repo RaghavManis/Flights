@@ -39,7 +39,7 @@ async function getAirplanes(){
 async function getAirplane(id){
     try {
         const airplane = await airplaneRepository.get(id) ;
-        // if(!airplane){
+        // if(!airplane){ // wrong way 
         //     throw new AppError("airplane you requested is not found in database" , StatusCodes.NOT_FOUND) ;
         // }
         return airplane ;
@@ -54,8 +54,8 @@ async function getAirplane(id){
 async function destroyAirplane(id){
     console.log(id) ;
     try {
-        const response = await airplaneRepository.destroy(id) ;
-        return response ;
+        const airplane = await airplaneRepository.destroy(id) ;
+        return airplane ;
     } catch (error) {
         if(error.statusCodes == StatusCodes.NOT_FOUND){
             throw new AppError("airplane you requested for remove from database , is not present in the database" , StatusCodes.NOT_FOUND) ;
@@ -63,10 +63,22 @@ async function destroyAirplane(id){
         throw new AppError("can't delete the requested airplane" , StatusCodes.INTERNAL_SERVER_ERROR) ;
     }
 }
+async function updataAirplane(id , data){
+    try {
+        const airplane = await airplaneRepository.update(id, data) ;
+        return airplane ;
+    } catch (error) {
+        if(error.statusCodes == StatusCodes.NOT_FOUND){
+            throw new AppError("airplane you want to update is not present in the datbase" ,error.statusCodes) ;
+        }
+        throw new AppError("unable to update airplane" , statusCodes.INTERNAL_SERVER_ERROR) ;
+    }
+}
 
 module.exports = {
     createAirplane,
     getAirplanes,
     getAirplane,
-    destroyAirplane
+    destroyAirplane,
+    updataAirplane
 };

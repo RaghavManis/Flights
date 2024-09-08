@@ -48,13 +48,21 @@ class CrudRepository {
     }
 
     // Update a record by ID
-    async update(id, data) {
-        const response = await this.model.update(data, {
+    async update(id, data) { 
+        const [updatedRows] = await this.model.update(data, {
             where: {
                 id: id
             }
         });
-        return response;
+        
+        if (updatedRows === 0) {
+            // If no rows were updated, throw a NOT FOUND error
+            throw new AppError("The airplane you want to update is not present in the database", StatusCodes.NOT_FOUND);
+        }
+    
+        // Fetch the updated airplane and return it
+        const updatedAirplane = await this.model.findByPk(id);
+        return updatedAirplane;
     }
 }
 
