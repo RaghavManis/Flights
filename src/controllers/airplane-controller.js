@@ -37,11 +37,11 @@ async function createAirplane(req , res){
           //           })
           
           // ...........................INSTEAD OF DOING SAME THING AGAIN AND AGAIN JUST DO IT ONCE .............................
-        ErrorResponse.message = "something went wrong while creating the airplane (we are in airplane controller)" ;
+        // ErrorResponse.message = "something went wrong while creating the airplane (we are in airplane controller)" ;
         ErrorResponse.error = error ;
         return res
                   // .status(StatusCodes.INTERNAL_SERVER_ERROR)
-                  .status(error.statusCode) // since we already importing error from repo file and in repo file error is already set up so 
+                  .status(error.statusCodes) // since we already importing error from repo file and in repo file error is already set up so 
                                              // just use that error code here instead of hard coding of same error error 
                   .json(ErrorResponse) ;
     }

@@ -6,7 +6,7 @@ const { Airplane }  = require('../models') ;             // we importing the our
 
 class AirplaneRepository extends crudRepository{
     constructor(){
-        console.log("inside the constructor of airplane-repository .js") ;
+        // console.log("inside the constructor of airplane-repository .js") ;
         super(Airplane) ; // paassing our model to parent class
     }
 }
