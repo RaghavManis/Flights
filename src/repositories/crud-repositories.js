@@ -57,12 +57,12 @@ class CrudRepository {
         
         if (updatedRows === 0) {
             // If no rows were updated, throw a NOT FOUND error
-            throw new AppError("The airplane you want to update is not present in the database", StatusCodes.NOT_FOUND);
+            throw new AppError("The data you want to update is not present in the database", StatusCodes.NOT_FOUND);
         }
     
         // Fetch the updated airplane and return it
-        const updatedAirplane = await this.model.findByPk(id);
-        return updatedAirplane;
+        const updatedData = await this.model.findByPk(id);
+        return updatedData;
     }
 }
 

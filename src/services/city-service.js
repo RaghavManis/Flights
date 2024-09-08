@@ -28,7 +28,32 @@ async function createCity(data) {
     }
 }
 
+async function destroyCity(id){
+    console.log(id) ;
+    try {
+        const city = await cityRepository.destroy(id) ;
+        return city ;
+    } catch (error) {
+        if(error.statusCodes == StatusCodes.NOT_FOUND){
+            throw new AppError("city you requested for remove from database , is not present in the database" , StatusCodes.NOT_FOUND) ;
+        }
+        throw new AppError("can't delete the requested airplane" , StatusCodes.INTERNAL_SERVER_ERROR) ;
+    }
+}
 
+async function updateCity(id , data){
+    try {
+        const city = await cityRepository.update(id, data) ;
+        return city ;
+    } catch (error) {
+        if(error.statusCodes == StatusCodes.NOT_FOUND){
+            throw new AppError("city you want to update is not present in the datbase" ,error.statusCodes) ;
+        }
+        throw new AppError("unable to update city" , statusCodes.INTERNAL_SERVER_ERROR) ;
+    }
+}
 module.exports={
-    createCity
+    createCity,
+    destroyCity,
+    updateCity
 }

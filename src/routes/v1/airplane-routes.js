@@ -2,6 +2,8 @@ const express = require('express') ;
 const {AirplaneMiddlewares} = require('../../middlewares') ;
 const {AirplaneController} = require('../../controllers') ;
 const router = express.Router() ;
+// you should notice one thing that we are applying middleware while we are requesting any request other that the post
+
 
 // /api/v1/airplanes POST request
 router.post('/' , AirplaneMiddlewares.validateRequest , AirplaneController.createAirplane) ; // yes here you have to call the createAirplane function of the airplane-controller.js file in controller folder

@@ -28,6 +28,44 @@ async function createCity(req , res){
     }
 }
 
+async function destroyCity(request , response){
+    // console.log(request.params.id) ;
+    try {
+      const city = await CityService.destroyCity(request.params.id) ;
+      SuccessResponse.data = city ;
+      SuccessResponse.message = "successfully deleted given city " ;
+      return response
+                     .status(StatusCodes.OK)
+                     .json(SuccessResponse) ;
+    } catch (error) {// no need to handle error saperately , since error coming from airplaneService need already contains the details so use that
+      ErrorResponse.error=  error ;
+      return response
+                     .status(error.statusCodes)
+                     .json(ErrorResponse) ;
+    }
+  }
+
+  
+async function updateCity(req , res){
+    try {
+      const airplane = await CityService.updateCity(req.params.id , {
+        name:req.body.name
+      })
+      SuccessResponse.data = airplane ;
+      SuccessResponse.message = "succefully updated city with given city id" ;
+      return res
+                .status(StatusCodes.OK)
+                .json(SuccessResponse) ;
+    } catch (error) {// no need to handle error saperately, since error coming from airplaneService need already contains the details so use that
+      ErrorResponse.error = error ;
+      return res
+               .status(error.statusCodes)
+               .json(ErrorResponse) ;
+    }
+  }
+
 module.exports = {
-    createCity
+    createCity,
+    destroyCity,
+    updateCity
 }

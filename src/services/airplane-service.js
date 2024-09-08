@@ -63,7 +63,7 @@ async function destroyAirplane(id){
         throw new AppError("can't delete the requested airplane" , StatusCodes.INTERNAL_SERVER_ERROR) ;
     }
 }
-async function updataAirplane(id , data){
+async function updateAirplane(id , data){
     try {
         const airplane = await airplaneRepository.update(id, data) ;
         return airplane ;
@@ -80,5 +80,5 @@ module.exports = {
     getAirplanes,
     getAirplane,
     destroyAirplane,
-    updataAirplane
+    updateAirplane
 };

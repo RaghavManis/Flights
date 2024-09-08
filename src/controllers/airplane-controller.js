@@ -16,7 +16,7 @@ async function createAirplane(req , res){
         capacity: req.body.capacity 
       });
         // return res.status(StatusCodes.CREATED)
-        //           .json({
+        //           .json({ 
         //             success:true ,
         //             message:"successfully create an airplane",
         //             data:airplane ,
@@ -109,7 +109,7 @@ async function destroyAirplane(request , response){
 
 async function updateAirplane(req , res){
   try {
-    const airplane = await AirplaneService.updataAirplane(req.params.id , {
+    const airplane = await AirplaneService.updateAirplane(req.params.id , {
       modelNumber:req.body.modelNumber,
       capacity : req.body.capacity
     })
