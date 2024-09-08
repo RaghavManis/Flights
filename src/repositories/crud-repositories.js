@@ -26,6 +26,9 @@ class CrudRepository {
                 id: id
             }
         });
+        if(!response){
+            throw new AppError("airplane you requested for deleting is not on the database" , StatusCodes.NOT_FOUND) ;
+        }
         return response;
     }
 
