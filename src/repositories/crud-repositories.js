@@ -7,65 +7,46 @@ class CrudRepository {
 
     // Create a new record
     async create(data) {
-        // try {
+        // try {    // since whatever the error is going from here we are handling that in service folder so why we handle error here 
+                    // similarly we will remove all try catch block from all crud operations 
             const response = await this.model.create(data);
             return response;
         // } catch (error) {
         //     Logger.error("Something went wrong in the Crud : create", error);
         //     throw error;
         // }
-    }
+    } 
 
     // Delete a record by ID 
     async destroy(id) {
-        try {
-            const response = await this.model.destroy({
-                where: {
-                    id: id
-                }
-            });
-            return response;
-        } catch (error) {
-            Logger.error("Something went wrong in the Crud : destroy", error);
-            throw error;
-        }
+        const response = await this.model.destroy({
+            where: {
+                id: id
+            }
+        });
+        return response;
     }
 
     // Get a record by ID
     async get(id) {
-        try {
-            const response = await this.model.findByPk(id);
-            return response;
-        } catch (error) {
-            Logger.error("Something went wrong in the Crud : get", error);
-            throw error;
-        }
+        const response = await this.model.findByPk(id);
+        return response;
     }
 
     // Get all records
     async getAll() {
-        try {
-            const response = await this.model.findAll(); // Typically, findAll is used
-            return response;
-        } catch (error) {
-            Logger.error("Something went wrong in the Crud : getAll", error);
-            throw error;
-        }
+        const response = await this.model.findAll(); // Typically, findAll is used
+        return response;
     }
 
     // Update a record by ID
     async update(id, data) {
-        try {
-            const response = await this.model.update(data, {
-                where: {
-                    id: id
-                }
-            });
-            return response;
-        } catch (error) {
-            Logger.error("Something went wrong in the Crud : update", error);
-            throw error;
-        }
+        const response = await this.model.update(data, {
+            where: {
+                id: id
+            }
+        });
+        return response;
     }
 }
 

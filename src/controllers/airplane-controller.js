@@ -1,6 +1,7 @@
 const {AirplaneService} = require('../services') ;
 const {StatusCodes} = require('http-status-codes') ;
 const {ErrorResponse , SuccessResponse} = require('../utills/common') ;
+const { success } = require('../utills/common/error-response');
 // const { response } = require('express');
 
 // const { createAirplane } = require('../services/airplane-service');
@@ -9,7 +10,7 @@ async function createAirplane(req , res){
   try {
       // console.log("inside try block of controller");
       // console.log(req.body);
-      const airplane = await AirplaneService.createAirplane({
+      const airplane = await AirplaneService.createAirplane({ // don't forgrt to add await
         modelNumber: req.body.modelNumber ,
         capacity: req.body.capacity 
       });
@@ -47,6 +48,23 @@ async function createAirplane(req , res){
     }
 }
 
+async function getAirplanes(req,  res){
+  try {
+    const airplanes = await AirplaneService.getAirplanes() ;
+    SuccessResponse.data = airplanes ;
+    return res 
+              .status(StatusCodes.OK)
+              .json(SuccessResponse) ;
+    
+  } catch (error) {
+    ErrorResponse.error = error ;
+    return res  
+              .status(error.statusCodes)
+              .json(ErrorResponse) ;
+  }
+}
+
 module.exports = {
-    createAirplane
+    createAirplane ,
+    getAirplanes
 }

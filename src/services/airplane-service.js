@@ -13,7 +13,7 @@ async function createAirplane(data) {
     } catch (error) {
         if (error.name == "SequelizeValidationError") {
             let explanation = [];
-            // console.log(error);
+            // console.log(error); 
             // Iterate over the errors array and collect messages
             error.errors.forEach((err) => {
                 explanation.push(err.message);
@@ -27,6 +27,16 @@ async function createAirplane(data) {
     }
 }
 
+async function getAirplanes(){
+    try {
+        const airplanes = await airplaneRepository.getAll() ;
+        return airplanes ;
+    } catch (error) {
+        throw new AppError("cannot fetch data of all airplanes" , StatusCodes.INTERNAL_SERVER_ERROR) ;
+    }
+}
+
 module.exports = {
-    createAirplane
+    createAirplane,
+    getAirplanes
 };
