@@ -1,4 +1,6 @@
 const { Logger } = require('../config');
+const AppError = require('../utills/errors/app-error');
+const {StatusCodes} = require('http-status-codes') ;
 
 class CrudRepository {
     constructor(model) {
@@ -30,6 +32,9 @@ class CrudRepository {
     // Get a record by ID
     async get(id) {
         const response = await this.model.findByPk(id);
+        if(!response){  //since response should be object if crud operation is working fine , but if nit working fine then it will be nULL
+            throw new AppError("the airplane you requested is not in my database" , StatusCodes.NOT_FOUND ) ;
+        }
         return response;
     }
 

@@ -2,10 +2,11 @@ const {AirplaneService} = require('../services') ;
 const {StatusCodes} = require('http-status-codes') ;
 const {ErrorResponse , SuccessResponse} = require('../utills/common') ;
 const { success } = require('../utills/common/error-response');
-// const { response } = require('express');
 
-// const { createAirplane } = require('../services/airplane-service');
-
+/**
+ * POST : /airplanes
+ * req-body {modelNumber : "airplane_name" , capacity:"value"} 
+ */
 async function createAirplane(req , res){
   try {
       // console.log("inside try block of controller");
@@ -48,6 +49,11 @@ async function createAirplane(req , res){
     }
 }
 
+
+/**
+ * get : /airplanes
+ * req-body {} 
+ */
 async function getAirplanes(req,  res){
   try {
     const airplanes = await AirplaneService.getAirplanes() ;
@@ -64,7 +70,29 @@ async function getAirplanes(req,  res){
   }
 }
 
+/**
+ * get : /airplanes:id
+ * req-body {} 
+ */
+async function getAirplane(req,  res){
+  console.log(req.params.id) ; // console for checkiing that your id coming without any error
+  try {
+    const airplane = await AirplaneService.getAirplane(req.params.id) ;
+    SuccessResponse.data = airplane ;
+    return res 
+              .status(StatusCodes.OK)
+              .json(SuccessResponse) ;
+    
+  } catch (error) {
+    ErrorResponse.error = error ;
+    return res  
+              .status(error.statusCodes)
+              .json(ErrorResponse) ;
+  }
+}
+
 module.exports = {
     createAirplane ,
-    getAirplanes
+    getAirplanes,
+    getAirplane
 }
