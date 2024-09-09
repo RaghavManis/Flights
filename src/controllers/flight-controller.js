@@ -1,7 +1,7 @@
 const {StatusCodes} = require('http-status-codes') ;
-const {CityService} = require('../services') ;
+const {FlightsService} = require('../services') ;
 const {SuccessResponse , ErrorResponse} = require('../utills/common') ;
-const AppError = require('../utills/errors/app-error');
+// const AppError = require('../utills/errors/app-error');
 // controller me throw nhh krna hai , ye last point hai , yha se response hi return hoga always 
 // second thing set the data here which you will pass in the model for creating entry
 
@@ -10,13 +10,19 @@ const AppError = require('../utills/errors/app-error');
  * POST : /cities
  * req-body {name : 'city_name'}
  */
-async function createCity(req , res){
+async function createFlight(req , res){
     try {
-        const city = await CityService.createCity({
-            name : req.body.name 
+        const flight = await FlightsService.createFlight({
+            id : req.body.id ,
+            price : req.body.price ,
+            name : req.body.name ,
+            destination : req.body.destination ,
+            arrival : req.body.idarrival ,
+            arivalTime : req.body.idarrivelTime ,
+            departureTime : req.body.departureTime ,
         })
-        SuccessResponse.data = city ;
-        SuccessResponse.message = "successfully created the city" ;
+        SuccessResponse.data = flight ;
+        SuccessResponse.message = "successfully created the flight" ;
         return res
                  .status(StatusCodes.OK) 
                  .json(SuccessResponse) ;
@@ -28,12 +34,12 @@ async function createCity(req , res){
     }
 }
 
-async function destroyCity(request , response){
+async function destroyFlight(request , response){
     // console.log(request.params.id) ;
     try {
-      const city = await CityService.destroyCity(request.params.id) ;
-      SuccessResponse.data = city ;
-      SuccessResponse.message = "successfully deleted given city " ;
+      const flight = await CityService.destroyFlight(request.params.id) ;
+      SuccessResponse.data = flight ;
+      SuccessResponse.message = "successfully deleted given flight " ;
       return response
                      .status(StatusCodes.OK)
                      .json(SuccessResponse) ;
@@ -46,13 +52,19 @@ async function destroyCity(request , response){
   }
 
    
-async function updateCity(req , res){
+async function updateFlight(req , res){
     try {
-      const airplane = await CityService.updateCity(req.params.id , {
-        name:req.body.name
+      const flight = await CityService.updateCity(req.params.id , {
+            id : req.body.id ,
+            price : req.body.price ,
+            name : req.body.name ,
+            destination : req.body.destination ,
+            idarrival : req.body.idarrival ,
+            idarrivelTime : req.body.idarrivelTime ,
+            departureTime : req.body.departureTime ,
       })
-      SuccessResponse.data = airplane ;
-      SuccessResponse.message = "succefully updated city with given city id" ;
+      SuccessResponse.data = flight ;
+      SuccessResponse.message = "succefully updated flight with given flight id" ;
       return res
                 .status(StatusCodes.OK)
                 .json(SuccessResponse) ;
@@ -65,7 +77,7 @@ async function updateCity(req , res){
   }
 
 module.exports = {
-    createCity,
-    destroyCity,
-    updateCity
+    createFlight,
+    destroyFlight,
+    updateFlight
 }
