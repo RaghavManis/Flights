@@ -13,7 +13,7 @@ module.exports = {
         table:'Cities',      // table_name of referencing table
         field:'id'           // colunm_name of that referencing table
       },
-      onUpdate:'CASCADE',    // adding extra properties to the constraint that whenever we update primary key details then all related data will be updated 
+      // onUpdate:'CASCADE',    // adding extra properties to the constraint that whenever we update primary key details then all related data will be updated 
       onDelete:'CASCADE'     // similarly on deletion of primary key all related data will be deletd
     }) ;
   },
