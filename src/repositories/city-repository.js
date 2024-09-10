@@ -2,13 +2,13 @@ const crudRepository = require('./crud-repositories') ; // the crud repository w
                                                         // a template for crud operations ..... and whenever we want to add some then we pass our
                                                         // model in that repo by this airplane repo 
 
-const { Airplane }  = require('../models') ;             // we importing the our table(model) so that we can pass it in the crud repo 
+const { City }  = require('../models') ;             // we importing the our table(model) so that we can pass it in the crud repo 
 
-class AirplaneRepository extends crudRepository{
+class CityRepository extends crudRepository{
     constructor(){
         // console.log("inside the constructor of airplane-repository .js") ;
-        super(Airplane) ; // paassing our model to parent class
+        super(City) ; // paassing our model to parent class
     }
 }
 
-module.exports = AirplaneRepository ;
+module.exports = CityRepository ;

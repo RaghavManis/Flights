@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+        this.hasMany(models.flights , {
+          foreignKey:'airplaneId',
+          onDelete:'CASCADE' // this property implies that if a airplane is deleted then all related flights will be deleted 
+        })
     }
   }
   Airplane.init({
