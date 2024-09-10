@@ -29,3 +29,4 @@ async function createAirplane(req , res){
 module.exports = {
     createAirplane
 }
+console.log("testing ") ;
