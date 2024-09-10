@@ -33,9 +33,9 @@ async function createAirport(req , res){
  * get : /airports
  * req-body {} 
  */
-async function getAirport(req,  res){
+async function getAirports(req,  res){
   try {
-    const airport = await AirportService.getAirport() ;
+    const airport = await AirportService.getAirports() ;
     SuccessResponse.data = airport ;
     return res 
               .status(StatusCodes.OK)
@@ -104,7 +104,7 @@ async function updateAirport(req , res){
 }
 module.exports = {
     createAirport ,
-    getAirport,
+    getAirports,
     getAirport,
     destroyAirport,
     updateAirport

@@ -27,7 +27,7 @@ async function createAirport(data) {
     }
 }
 
-async function getAirport(){
+async function getAirports(){
     try {
         const airport = await airportRepository.getAll() ;
         return airport ;
@@ -77,7 +77,7 @@ async function updateAirport(id , data){
 
 module.exports = {
     createAirport,
-    getAirport,
+    getAirports,
     getAirport,
     destroyAirport,
     updateAirport

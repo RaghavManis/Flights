@@ -9,7 +9,7 @@ const router = express.Router() ;
 router.post('/' , AirportMiddlewares.validateRequest , AirportController.createAirport) ; // yes here you have to call the createAirplane function of the airplane-controller.js file in controller folder
 
 // /api/v1/airplanes get request
-router.get('/' , AirportController.getAirport) ;
+router.get('/' , AirportController.getAirports) ;
 
 // /api/v1/airplanes:id get request
 router.get('/:id' , AirportController.getAirport) ;
