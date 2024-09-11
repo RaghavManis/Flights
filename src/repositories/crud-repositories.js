@@ -11,6 +11,7 @@ class CrudRepository {
     async create(data) {
         // try {    // since whatever the error is going from here we are handling that in service folder so why we handle error here 
                     // similarly we will remove all try catch block from all crud operations 
+                    console.log("gsdfwcje") ;
             const response = await this.model.create(data);
             return response;
         // } catch (error) {
