@@ -97,7 +97,7 @@ async function createFlight(data) {
 async function getAllFlights(query){
     let customFilter = {};
     let sortFilter = [] ;
-    let endingTripTime = "23:59:00" ;
+    let queryTripEndingTime = " 23:59:00"
     if(query.trips){
         [departureAirportId , arrivalAirportId] = query.trips.split("-") ;
         customFilter.departureAirportId =departureAirportId ;
@@ -117,7 +117,6 @@ async function getAllFlights(query){
     if(query.tripDate){
         // console.log("fsgbwdjchgfbhf" + query.tripDate) ;
         // console.log("----->"+query.tripDate) ;
-        let queryTripEndingTime = " 23:59:00"
         customFilter.departureTime = {
             // [Op.gte]:[query.tripDate] , // if you give like this then it through error
             // [Op.gte]:query.tripDate ,
@@ -134,11 +133,14 @@ async function getAllFlights(query){
         // chutiye insan note it down ---> In JavaScript, when you use curly braces {}, you need to use the return statement to return a value
         //                                 from the function. Otherwise, the function implicitly returns undefined.
         const sortFilters = params.map((param)=>{ return param.split("_")}) ; 
+        // const sortFilters = params.map((param)=> param.split("_")) ;  // use any one of above 
+
         sortFilter = sortFilters ;
     }
     // console.log("in flight service getallFlights function"+sortFilter) ;
     try {
         const response = flightRepository.getAllFlights(customFilter , sortFilter) ; // here we are passong two arguments for filtering 
+        console.log( "type of response in service is = " + typeof response) ;
         return response ;
     } catch (error) {
         throw new AppError('Cannot fetch data of all flights', StatusCodes.INTERNAL_SERVER_ERROR);

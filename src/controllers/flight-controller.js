@@ -124,8 +124,8 @@ async function createFlight(req , res){
             boardingGate : req.body.boardingGate ,
             totalSeats : req.body.totalSeats ,
       });
-        SuccessResponse.message = "successfully create an airport" ;
-        SuccessResponse.data = flight ;
+      SuccessResponse.data = flight ;
+      SuccessResponse.message = "successfully create an airport " ;
         return res
                   .status(StatusCodes.CREATED)
                   .json(SuccessResponse) ;
@@ -141,8 +141,9 @@ async function getAllFlights(req , res){
   try {
     const flights = await FlightService.getAllFlights(req.query) ;
     console.log("inside flight controller") ;
-        // SuccessResponse.message = "successfully create an airport" ;
+        SuccessResponse.message = "successfully fetch the data on basis of filters ";
         SuccessResponse.data = flights ;
+        // SuccessResponse.data = flights ;
         return res
                   .status(StatusCodes.CREATED)
                   .json(SuccessResponse) ;

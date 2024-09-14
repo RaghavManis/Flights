@@ -1,3 +1,5 @@
+const {Sequelize} = require('sequelize') ;
+
 'use strict';
 const {
   Model
@@ -12,13 +14,16 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.belongsTo(models.Airplane , { // be cautious with the name model , it should be same as the class name in the corresponding model
-        foreignKey:'airplaneId' // tjis must be same in both , in belongs to wali file and has many files 
+        foreignKey:'airplaneId', // this must be same in both , in belongs to wali file and has many files 
+        as : 'airplaneDetail' //since we are using multiple belongs to so it chances of cunfusion for the sequelize,so it will better if give name for all of them as alias
       });
       this.belongsTo(models.Airport , {
-        foreignKey:'departureAirportId'
+        foreignKey:'departureAirportId',
+        as :  'departureAirport',
       });
       this.belongsTo(models.Airport , {
-        foreignKey:'arrivalAirportId'
+        foreignKey:'arrivalAirportId' ,
+        as :  'arrivalAirport' 
       })
     }
   }

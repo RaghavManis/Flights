@@ -27,9 +27,10 @@ const router = express.Router() ;
 // /api/v1/airport POST request
 router.post('/' , FlightMiddleware.validateRequest , FlightController.createFlight) ; // yes here you have to call the createAirplane function of the airplane-controller.js file in controller folder
 
-console.log("inside flights routes") ;
+// console.log("inside flights routes") ;
 
 // /api/v1/flights/trips=MUM-DEL get request
+// here in get request we will send data in query params , and on that basis we will filter flights ;
 router.get('/' , FlightController.getAllFlights) ; // yes here you have to call the createAirplane function of the airplane-controller.js file in controller folder
 
 module.exports = router ; 
