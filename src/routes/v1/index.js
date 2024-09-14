@@ -14,7 +14,7 @@ const router = express.Router();
 //     });
 // });
 
-
+console.log("inside v1Routes") ;
 router.use('/airplanes' , airplaneRoutes) ; // this router is not calling controller form here , controller will call in airplane-routes.js
 router.use('/cities' , cityRoutes) ;
 router.use('/flights' , flightsRoutes) ;

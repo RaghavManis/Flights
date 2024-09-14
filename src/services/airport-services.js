@@ -8,16 +8,17 @@ const airportRepository = new AirportRepository();
 
 async function createAirport(data) {
     try {
+        console.log(data) ;
         const airport = await airportRepository.create(data);
+        console.log("successfully pass the airport services "); 
         return airport;
     } catch (error) {
         if (error.name == "SequelizeValidationError") {
             let explanation = [];
-            // console.log(error); 
             // Iterate over the errors array and collect messages
             error.errors.forEach((err) => {
                 explanation.push(err.message);
-            });
+            }); 
             // console.log(explanation);  // this will give you the all details of error which is stored in the above explanation
             // Throwing a BadRequest error with the collected messages
             throw new AppError(explanation, StatusCodes.BAD_REQUEST);

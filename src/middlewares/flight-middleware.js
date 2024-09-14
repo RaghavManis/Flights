@@ -5,9 +5,9 @@ const {compareTime} = require('../utills/helpers/date-time-helper') ;
 
 const validateRequest = (req , res , next)=>{
     // console.log("inside flights middleware") ;
-    let check = compareTime(req.departureTime , req.arrivalTime) ;
+    let check = compareTime( req.body.departureTime ,req.body.arrivalTime) ;
         if(!check){
-            ErrorResponse.message = "SOMETHING WRONG IN THE INCOMING REQUEST" ;
+            ErrorResponse.message = "SOMETHING WRONG IN THE INCOMING FLIGHTS SHEDULING TIME" ;
             ErrorResponse.error = new AppError ([ "sheduling of flight is wrong"] , StatusCodes.BAD_REQUEST) ;
             return res
             .status(StatusCodes.BAD_REQUEST)

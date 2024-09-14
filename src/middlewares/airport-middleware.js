@@ -27,6 +27,7 @@ const validateRequest = (request , response , next)=>{
                         .status(StatusCodes.BAD_REQUEST)
                         .json(ErrorResponse) ;
     }
+    console.log("middleware of airport is correctly checked ") ;
     next() ;
 }
 

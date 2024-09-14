@@ -26,7 +26,18 @@ class FlightRepository extends crudRepository{
         // console.log("inside the constructor of airplane-repository .js") ;
         super(flights) ; // paassing our model to parent class
     }
-}
+
+    async getAllFlights(filter , sort){  // ittee me ho gya filtering ka logic 
+        const response = await flights.findAll({
+            where:filter ,  
+            order:sort , 
+            // The order option takes an array of items to order the query by or a sequelize method. These items are
+            // themselves arrays in the form [column, direction]. The column will be escaped correctly and the 
+            // direction will be checked in a whitelist of valid directions (such as ASC, DESC, NULLS FIRST, etc).
+        })
+        return response ;
+    }
+} 
 
 module.exports = FlightRepository ;
 

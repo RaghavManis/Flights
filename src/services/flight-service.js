@@ -64,6 +64,7 @@
 const { StatusCodes } = require('http-status-codes');
 const { FlightRepository } = require('../repositories');
 const AppError = require('../utills/errors/app-error');
+const {Op} = require('sequelize') ;
 
 // creating an object of the AirplaneRepository class
 const flightRepository = new FlightRepository();
@@ -93,8 +94,59 @@ async function createFlight(data) {
     }
 }
 
+async function getAllFlights(query){
+    let customFilter = {};
+    let sortFilter = [] ;
+    let endingTripTime = "23:59:00" ;
+    if(query.trips){
+        [departureAirportId , arrivalAirportId] = query.trips.split("-") ;
+        customFilter.departureAirportId =departureAirportId ;
+        customFilter.arrivalAirportId = arrivalAirportId ;
+    }
+    if(query.price){
+        [minPrice , maxPrice] = query.price.split("-") ;
+        customFilter.price = {
+            [Op.between]:[minPrice , maxPrice] ,
+        }
+    }
+    if(query.travellers){
+        customFilter.totalSeats = {
+            [Op.gte]:query.travellers
+        }
+    }
+    if(query.tripDate){
+        // console.log("fsgbwdjchgfbhf" + query.tripDate) ;
+        // console.log("----->"+query.tripDate) ;
+        let queryTripEndingTime = " 23:59:00"
+        customFilter.departureTime = {
+            // [Op.gte]:[query.tripDate] , // if you give like this then it through error
+            // [Op.gte]:query.tripDate ,
+            // something is wrong in the below command 
+            [Op.between]:[query.tripDate , query.tripDate + queryTripEndingTime ] // beacuse Op.gte except an single integer for comparing not an array
+        }
+    }
+    if(query.sort){
+        const params = query.sort.split(',') ; // params will be a array containing data like this [departureTime_ASC , price_DESC]
+        // map function work on the each element of array , since we are again using the split which will further 
+        // split the element and gid give array, so data will be somthing like array of arrays ---->
+        //  [[departureTime , ASC] , [price , DESC]]; 
+
+        // chutiye insan note it down ---> In JavaScript, when you use curly braces {}, you need to use the return statement to return a value
+        //                                 from the function. Otherwise, the function implicitly returns undefined.
+        const sortFilters = params.map((param)=>{ return param.split("_")}) ; 
+        sortFilter = sortFilters ;
+    }
+    // console.log("in flight service getallFlights function"+sortFilter) ;
+    try {
+        const response = flightRepository.getAllFlights(customFilter , sortFilter) ; // here we are passong two arguments for filtering 
+        return response ;
+    } catch (error) {
+        throw new AppError('Cannot fetch data of all flights', StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+
+}
 
 module.exports = {
     createFlight,
-    
+    getAllFlights,
 };

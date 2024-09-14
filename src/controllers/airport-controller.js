@@ -9,12 +9,13 @@ const AppError = require('../utills/errors/app-error');
  */
 async function createAirport(req , res){
   try {
-      const airport = await AirportService.createAirport({ 
-        name : req.body.name ,
-        code : req.body.code ,
-        address : req.body.address ,
-        cityId : req.body.cityId ,
-      });
+    const airport = await AirportService.createAirport({ 
+      name : req.body.name ,
+      code : req.body.code ,
+      // address : req.body.address ,
+      cityId : req.body.cityId ,
+    });
+    console.log("successfully pass the airport controller") ;
         SuccessResponse.message = "successfully create an airport" ;
         SuccessResponse.data = airport ;
         return res
