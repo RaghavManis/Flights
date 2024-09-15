@@ -20,7 +20,7 @@ const crudRepository = require('./crud-repositories') ; // the crud repository w
                                                         // model in that repo by this airplane repo 
 const {Sequelize} = require('sequelize') ;
 
-const { flights , Airplane , Airport }  = require('../models') ;             // we importing the our table(model) so that we can pass it in the crud repo 
+const { flights , Airplane , Airport , City }  = require('../models') ;             // we importing the our table(model) so that we can pass it in the crud repo 
 
 class FlightRepository extends crudRepository{
     constructor(){
@@ -53,6 +53,10 @@ class FlightRepository extends crudRepository{
                 as :'departureAirport' ,
                 on:{                    // WE HAVE TO MENTION MANUALLY OF THERE IS SOMETHNG OTHER THAN THE NORMAL
                     col1:Sequelize.where(Sequelize.col("flights.departureAirportId") , "=" , Sequelize.col("departureAirport.code")) 
+                },
+                include:{
+                    model:City , 
+                    required:true
                 }
             },
             { 
@@ -61,6 +65,10 @@ class FlightRepository extends crudRepository{
                 as :'arrivalAirport' ,
                 on:{
                     col1:Sequelize.where(Sequelize.col("flights.arrivalAirportId") , "=" , Sequelize.col("arrivalAirport.code")) 
+                } ,
+                include:{
+                    model:City , 
+                    required:true
                 }
             }
         ]

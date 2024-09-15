@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
           foreignKey:'airplaneId',
           onDelete:'CASCADE' // this property implies that if a airplane is deleted then all related flights will be deleted 
         })
+        this.hasMany(models.Seat , {
+          foreignKey:'airplaneId',
+          onDelete:'CASCADE' // this property implies that if a airplane is deleted then all related flights will be deleted 
+        })
     }
   }
   Airplane.init({
