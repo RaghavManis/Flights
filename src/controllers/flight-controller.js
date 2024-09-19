@@ -155,7 +155,28 @@ async function getAllFlights(req , res){
     }
 }
 
+
+/**
+ * get : /flight:id
+ * req-body {} 
+ */
+async function getFlight(req,  res){
+  try {
+    const flight = await FlightService.getFlight(req.params.id) ;
+    SuccessResponse.data = flight ;
+    return res 
+              .status(StatusCodes.OK)
+              .json(SuccessResponse) ;
+    
+  } catch (error) {// no need to handle error saperately , since error coming from airplaneService need already contains the details so use that
+    ErrorResponse.error = error ;
+    return res  
+              .status(error.statusCodes)
+              .json(ErrorResponse) ;
+  }
+}
 module.exports = {
     createFlight ,
     getAllFlights ,
+    getFlight
 }

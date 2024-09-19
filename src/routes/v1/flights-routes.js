@@ -33,4 +33,7 @@ router.post('/' , FlightMiddleware.validateRequest , FlightController.createFlig
 // here in get request we will send data in query params , and on that basis we will filter flights ;
 router.get('/' , FlightController.getAllFlights) ; // yes here you have to call the createAirplane function of the airplane-controller.js file in controller folder
 
+// /api/v1/flights/:id GET
+router.get('/:id' , FlightController.getFlight) ;
+
 module.exports = router ; 

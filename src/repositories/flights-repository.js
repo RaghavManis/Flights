@@ -27,7 +27,7 @@ class FlightRepository extends crudRepository{
         // console.log("inside the constructor of airplane-repository .js") ;
         super(flights) ; // paassing our model to parent class
     }
-
+    
     async getAllFlights(filter , sort){  // ittee me ho gya filtering ka logic 
         const response = await flights.findAll({
             where:filter ,  
@@ -62,7 +62,7 @@ class FlightRepository extends crudRepository{
             { 
                 model:Airport ,
                 required : true ,
-                as :'arrivalAirport' ,
+                as :'arrivalAirport' , 
                 on:{
                     col1:Sequelize.where(Sequelize.col("flights.arrivalAirportId") , "=" , Sequelize.col("arrivalAirport.code")) 
                 } ,
@@ -77,6 +77,14 @@ class FlightRepository extends crudRepository{
         // console.log(response[0].id) ;
         
         return response ;
+    }
+
+    async get(id) {
+        const response = await this.model.findByPk(id);
+        if(!response){  //since response should be object if crud operation is working fine , but if not working fine then it will be nULL
+            throw new AppError("the airplane you requested is not in my database" , StatusCodes.NOT_FOUND ) ;
+        }
+        return response;
     }
 } 
 
