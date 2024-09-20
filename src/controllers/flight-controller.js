@@ -98,6 +98,7 @@ const {FlightService} = require('../services') ;
 const {StatusCodes} = require('http-status-codes') ;
 const {ErrorResponse , SuccessResponse} = require('../utills/common') ;
 const AppError = require('../utills/errors/app-error');
+const { response } = require('express');
 
 /**
  * POST : /flights
@@ -175,8 +176,29 @@ async function getFlight(req,  res){
               .json(ErrorResponse) ;
   }
 }
+
+async function updateSeats(req , res){
+  console.log("flight controller ") ;
+  try {
+    const flight = await FlightService.updateSeats({
+      flightId:req.params.id ,
+      seats:req.body.seats ,
+      dec:req.body.dec  
+    })
+    SuccessResponse.data = flight ;
+    return res
+              .status(StatusCodes.OK)
+              .json(SuccessResponse) ;
+  } catch (error) {
+    ErrorResponse.error = error ;
+    return res  
+              .status(error.statusCodes)
+              .json(ErrorResponse) ;
+  }
+}
 module.exports = {
     createFlight ,
     getAllFlights ,
-    getFlight
-}
+    getFlight,
+    updateSeats
+} 

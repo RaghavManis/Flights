@@ -1,24 +1,9 @@
-// const crudRepository = require('./crud-repositories') ; // the crud repository which we have created in this same folder , is going to work like
-//                                                         // a template for crud operations ..... and whenever we want to add some then we pass our
-//                                                         // model in that repo by this airplane repo 
-
-// const { flights }  = require('../models/flights') ;             // we importing the our table(model) so that we can pass it in the crud repo 
-
-// class FlightsRepository extends crudRepository{
-//     constructor(){
-//         super(flights) ; // paassing our model to parent class
-//         console.log("inside the constructor of flights-repository .js") ;
-//     }
-// }
-
-// module.exports = FlightsRepository ;
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const crudRepository = require('./crud-repositories') ; // the crud repository which we have created in this same folder , is going to work like
                                                         // a template for crud operations ..... and whenever we want to add some then we pass our
                                                         // model in that repo by this airplane repo 
 const {Sequelize} = require('sequelize') ;
+const db = require('../models') ;// we will use it for keeping lock 
 
 const { flights , Airplane , Airport , City }  = require('../models') ;             // we importing the our table(model) so that we can pass it in the crud repo 
 
@@ -85,6 +70,19 @@ class FlightRepository extends crudRepository{
             throw new AppError("the airplane you requested is not in my database" , StatusCodes.NOT_FOUND ) ;
         }
         return response;
+    }
+
+    async updateRemainingSeats(flightId , seats , dec = true){
+        await db.sequelize.query(`SELECT * from flights WHERE flights.id = ${flightId} FOR UPDATE ;`) ; //The FOR UPDATE clause is crucial in this context. It locks the row(s) returned by the SELECT query for updating. In a transactional system (especially in concurrent environments), this ensures that no other transaction can modify or lock the same row(s) until the current transaction is completed.
+                                                                                                        // This is often used to prevent race conditions in concurrent access scenarios, where multiple processes or users may be trying to update the same record at the same time. By locking the row, you ensure that one transaction fully completes before another transaction can make changes.
+        const flight = await flights.findByPk(flightId) ;
+        if (parseInt(dec)) {
+            const response = await flight.decrement('totalSeats' , {by:seats}) ;
+            return response ;
+        } else {
+            const response = await flight.increment('totalSeats' , {by:seats}) ;
+            return response ;
+        }
     }
 } 
 

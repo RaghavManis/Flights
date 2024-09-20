@@ -81,7 +81,20 @@ const validateRequest = (req , res , next)=>{
     next() ;
 }
 
+async function validateUpdateSeatsRequest(req , res , next){
+    if(!req.body.seats){
+        ErrorResponse.message = "something wrong in incoming data for update in seats "
+        ErrorResponse.error = new AppError ([ "number of seats not found in the incoming request"] , StatusCodes.BAD_REQUEST) ;
+        return res
+                  .status(StatusCodes.BAD_REQUEST)
+                  .json(ErrorResponse) ;
+    }
+    next() ;
+
+}
+
 
 module.exports = {
-    validateRequest
+    validateRequest,
+    validateUpdateSeatsRequest
 }

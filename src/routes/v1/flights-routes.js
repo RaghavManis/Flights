@@ -20,6 +20,7 @@
 const express = require('express') ;
 const {FlightMiddleware} = require('../../middlewares') ;
 const {FlightController} = require('../../controllers') ;
+const { FlightService } = require('../../services');
 const router = express.Router() ;
 // you should notice one thing that we are applying middleware while we are requesting any request other that the post
 
@@ -35,5 +36,8 @@ router.get('/' , FlightController.getAllFlights) ; // yes here you have to call 
 
 // /api/v1/flights/:id GET
 router.get('/:id' , FlightController.getFlight) ;
+
+// api/v1/flights/:id/seats patch
+router.patch('/:id/seats' , FlightMiddleware.validateUpdateSeatsRequest , FlightController.updateSeats)
 
 module.exports = router ; 
